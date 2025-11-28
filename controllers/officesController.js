@@ -7,7 +7,7 @@ const { geocodeXY } = require("../utils/mercator");
 exports.list = async (req, res) => {
   try {
     const sql = `
-      SELECT gov_code, id, name, address, postal_code, phone1, phone2, x, y
+      SELECT gov_code, id, name, address, postal_code, phone1, phone2, x, y,name_en,address_en
       FROM post_offices
       ORDER BY CAST(gov_code AS UNSIGNED), id
     `;
