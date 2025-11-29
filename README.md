@@ -50,6 +50,12 @@ API endpoints:
 /api/social/:id (PUT)        (owner)
 /api/social/:id (DELETE)     (owner)
 
+
+sectins
+
+put http://localhost:5000/api/sections
+
+get http://localhost:5000/api/sections
 > vite
 
 
