@@ -62,21 +62,11 @@ exports.updateFirstSection = async (req, res) => {
 
     // If new image is uploaded
     if (req.file) {
-      imagePath = `/uploads/${req.file.filename}`;
+      // Cloudinary returns the full URL in req.file.path
+      imagePath = req.file.path;
       console.log("New image path:", imagePath);
 
-      // Delete old image if exists
-      if (
-        existing[0].image &&
-        fs.existsSync(path.join(__dirname, "..", existing[0].image))
-      ) {
-        try {
-          fs.unlinkSync(path.join(__dirname, "..", existing[0].image));
-          console.log("Old image deleted:", existing[0].image);
-        } catch (unlinkErr) {
-          console.error("Error deleting old image:", unlinkErr);
-        }
-      }
+      // No need to delete old image from local filesystem as we are using Cloudinary
     } else {
       console.log("No file uploaded, keeping existing image:", imagePath);
     }
@@ -153,21 +143,11 @@ exports.createOrUpdateFirstSection = async (req, res) => {
 
     // If new image is uploaded
     if (req.file) {
-      imagePath = `/uploads/${req.file.filename}`;
+      // Cloudinary returns the full URL in req.file.path
+      imagePath = req.file.path;
       console.log("New image path:", imagePath);
 
-      // Delete old image if exists and we're updating
-      if (
-        oldImagePath &&
-        fs.existsSync(path.join(__dirname, "..", oldImagePath))
-      ) {
-        try {
-          fs.unlinkSync(path.join(__dirname, "..", oldImagePath));
-          console.log("Old image deleted:", oldImagePath);
-        } catch (unlinkErr) {
-          console.error("Error deleting old image:", unlinkErr);
-        }
-      }
+      // No need to delete old image from local filesystem as we are using Cloudinary
     } else {
       console.log("No file uploaded, image path:", imagePath);
     }

@@ -173,6 +173,9 @@ exports.updateSettings = async (req, res) => {
 // =============================
 // UPDATE LOGO (OWNER)
 // =============================
+// =============================
+// UPDATE LOGO (OWNER)
+// =============================
 exports.updateLogo = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({
@@ -181,22 +184,12 @@ exports.updateLogo = async (req, res) => {
     });
   }
 
-  const filePath = `/uploads/${req.file.filename}`;
+  // Cloudinary returns the full URL in req.file.path
+  const filePath = req.file.path;
 
   try {
-    const [old] = await db.query("SELECT logo FROM settings WHERE id = 1");
-
-    // Delete old logo if exists
-    if (
-      old[0]?.logo &&
-      fs.existsSync(path.join(__dirname, "..", old[0].logo))
-    ) {
-      try {
-        fs.unlinkSync(path.join(__dirname, "..", old[0].logo));
-      } catch (unlinkErr) {
-        console.error("Error deleting old logo:", unlinkErr);
-      }
-    }
+    // No need to delete old logo from local filesystem as we are using Cloudinary
+    // Ideally, we would delete from Cloudinary using the public_id, but per instructions we just update the DB
 
     await db.query(
       "UPDATE settings SET logo = ?, updated_at = NOW() WHERE id = 1",
@@ -225,6 +218,9 @@ exports.updateLogo = async (req, res) => {
 // =============================
 // UPDATE DARK LOGO (OWNER)
 // =============================
+// =============================
+// UPDATE DARK LOGO (OWNER)
+// =============================
 exports.updateLogoDark = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({
@@ -233,22 +229,11 @@ exports.updateLogoDark = async (req, res) => {
     });
   }
 
-  const filePath = `/uploads/${req.file.filename}`;
+  // Cloudinary returns the full URL in req.file.path
+  const filePath = req.file.path;
 
   try {
-    const [old] = await db.query("SELECT logo_dark FROM settings WHERE id = 1");
-
-    // Delete old dark logo if exists
-    if (
-      old[0]?.logo_dark &&
-      fs.existsSync(path.join(__dirname, "..", old[0].logo_dark))
-    ) {
-      try {
-        fs.unlinkSync(path.join(__dirname, "..", old[0].logo_dark));
-      } catch (unlinkErr) {
-        console.error("Error deleting old dark logo:", unlinkErr);
-      }
-    }
+    // No need to delete old logo from local filesystem as we are using Cloudinary
 
     await db.query(
       "UPDATE settings SET logo_dark = ?, updated_at = NOW() WHERE id = 1",
