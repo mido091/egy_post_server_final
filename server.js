@@ -20,6 +20,7 @@ const informations = require("./controllers/informationsOffice");
 
 // Routes
 const settingsRoutes = require("./routes/settings");
+const sectionsRoutes = require("./routes/sections");
 
 // Middleware
 const {
@@ -88,6 +89,9 @@ app.use("/api", router);
 
 // Mount settings routes
 app.use("/api/settings", settingsRoutes);
+
+// Mount sections routes
+app.use("/api/sections", sectionsRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("Server running on", PORT));

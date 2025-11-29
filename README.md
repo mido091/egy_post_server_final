@@ -66,6 +66,7 @@ get http://localhost:5000/api/sections
   ➜  Network: use --host to expose
   ➜  press h + enter to show help
 
+git remote remove origin
 
 
 
